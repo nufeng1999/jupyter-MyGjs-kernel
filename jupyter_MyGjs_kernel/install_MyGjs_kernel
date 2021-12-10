@@ -18,7 +18,7 @@ kernel_json = {
         "{connection_file}"
     ],
     "display_name": "MyGjs",
-    "language": "Python"
+    "language": "javascript"
 }
 
 
