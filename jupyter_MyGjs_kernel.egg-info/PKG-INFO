@@ -1,0 +1,13 @@
+Metadata-Version: 1.1
+Name: jupyter-MyGjs-kernel
+Version: 0.0.1
+Summary: Minimalistic Python kernel for Jupyter
+Home-page: https://github.com/nufeng1999/jupyter-MyGjs-kernel/
+Author: nufeng
+Author-email: 18478162@qq.com
+License: MIT
+Download-URL: https://github.com/nufeng1999/jupyter-MyGjs-kernel/tarball/0.0.1
+Description: UNKNOWN
+Keywords: jupyter,notebook,kernel,python,py
+Platform: UNKNOWN
+Classifier: License :: OSI Approved :: MIT License

@@ -1,0 +1,13 @@
+LICENSE.txt
+MANIFEST.in
+README.md
+setup.cfg
+setup.py
+jupyter_MyGjs_kernel/__init__.py
+jupyter_MyGjs_kernel/__main__.py
+jupyter_MyGjs_kernel/install_MyGjs_kernel
+jupyter_MyGjs_kernel/kernel.py
+jupyter_MyGjs_kernel.egg-info/PKG-INFO
+jupyter_MyGjs_kernel.egg-info/SOURCES.txt
+jupyter_MyGjs_kernel.egg-info/dependency_links.txt
+jupyter_MyGjs_kernel.egg-info/top_level.txt
