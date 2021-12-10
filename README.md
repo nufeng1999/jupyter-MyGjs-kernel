@@ -1,5 +1,5 @@
 # MyGjs kernel for Jupyter
-[Example](https://github.com/nufeng1999/jupyter-MyGjs-kernel/blob/master/example/jupyter_dart_readme.ipynb "Example")
+[Example](https://github.com/nufeng1999/jupyter-MyGjs-kernel/blob/master/example/jupyter_gjs_readme.ipynb "Example")
 * Make sure you have the following requirements installed:
   * 
   * jupyter
