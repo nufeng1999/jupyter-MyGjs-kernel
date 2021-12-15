@@ -53,7 +53,7 @@ class IREPLWrapper(replwrap.REPLWrapper):
         replwrap.REPLWrapper.__init__(self, cmd_or_spawn, orig_prompt,
                                       prompt_change,extra_init_cmd=extra_init_cmd)
     def _expect_prompt(self, timeout=-1):
-        if timeout == -1 or timeout ==None :
+        if timeout ==None :
             # "None" means we are executing code from a Jupyter cell by way of the run_command
             # in the do_execute() code below, so do incremental output.
             retry=0
@@ -63,14 +63,14 @@ class IREPLWrapper(replwrap.REPLWrapper):
             while True:
                 if self.startflag :
                     cmdexectimeout=None
-                    run_time = time.time() - self.start_time
+                    run_time = time.time() - cmdstart_time
                     if run_time > self.startexpecttimeout:
                         self.startflag=False
                         self.line_output_callback(self.child.before + '\r\n')
-                        self.line_output_callback("\n0End of startup process\n")
+                        # self.line_output_callback("\nEnd of startup process\n")
                         break
                 try:
-                    pos = self.child.expect_exact([u'\r\n', self.continuation_prompt, self.replsetip, pexpect.EOF, pexpect.TIMEOUT],timeout=cmdexectimeout)
+                    pos = self.child.expect_exact([self.prompt, self.continuation_prompt, self.replsetip, pexpect.EOF, pexpect.TIMEOUT],timeout=cmdexectimeout)
                     if pos == 2:
                         # End of line received
                         if self.child.terminated:
@@ -89,6 +89,7 @@ class IREPLWrapper(replwrap.REPLWrapper):
                     elif pos == 0:
                         self.line_output_callback(self.child.before + '\n')
                         cmdstart_time = time.time()
+                        if self.prompt!="\r\n":break
                     else:
                         if len(self.child.before) != 0:
                             # prompt received, but partial line precedes it
@@ -102,7 +103,7 @@ class IREPLWrapper(replwrap.REPLWrapper):
                                 break
                 except Exception as e:
                     # self.line_output_callback(self.child.before)
-                    self._write_to_stderr("[MyPythonkernel] Error:Executable _expect_prompt error! "+str(e)+"\n")
+                    self._write_to_stderr("[MyCkernel] Error:Executable _expect_prompt error! "+str(e)+"\n")
         else:
             # Otherwise, use existing non-incremental code
             pos = replwrap.REPLWrapper._expect_prompt(self, timeout=timeout)
@@ -703,6 +704,8 @@ echo "OK"
         return
     def create_jupyter_subprocess(self, cmd,cwd=None,shell=False,env=None,magics=None):
         try:
+            if env==None or len(env)<1:
+                env=os.environ
             if magics!=None and len(magics['runinterm'])>0 and len(magics['term'])>0:
                 execfile=''
                 for x in cmd:
@@ -1148,7 +1151,7 @@ class MyGjsKernel(MyKernel):
         bcancel_exec=False
         retinfo=self.get_retinfo()
         retstr=''
-        p = self.create_jupyter_subprocess(['gjs',fil_ename]+ magics['args'],cwd=None,shell=False,env=self.addkey2dict(magics,'env'))
+        p = self.create_jupyter_subprocess(['gjs',fil_ename]+ magics['args'],cwd=None,shell=False,env=self.addkey2dict(magics,'env'),magics=magics)
         #p = self.create_jupyter_subprocess([binary_file.name]+ magics['args'],cwd=None,shell=False)
         #p = self.create_jupyter_subprocess([self.master_path, binary_file.name] + magics['args'],cwd='/tmp',shell=True)
         self.g_rtsps[str(p.pid)]=p
