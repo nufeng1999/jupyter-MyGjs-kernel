@@ -10,6 +10,8 @@
   * pip
 ### Step-by-step
 ```bash
+
+pip install zerorpc
 git clone https://github.com/nufeng1999/jupyter-MyGjs-kernel.git
 cd jupyter-MyGjs-kernel
 pip install -e . 
